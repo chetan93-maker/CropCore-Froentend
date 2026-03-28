@@ -9,9 +9,26 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
-    open: true,
-    hmr: {
-      overlay: false
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+    },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['lucide-react', 'react-icons', 'framer-motion'],
+          charts: ['recharts'],
+          utils: ['axios', 'react-hot-toast']
+        }
+      }
     }
   }
 })

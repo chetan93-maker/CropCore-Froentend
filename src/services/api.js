@@ -1,6 +1,18 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080';
+// Get API URL based on environment
+const getApiUrl = () => {
+  // Production (Netlify) - uses environment variable
+  if (import.meta.env.PROD) {
+    return import.meta.env.VITE_API_URL || 'https://crop-tracker-api.onrender.com';
+  }
+  // Development (localhost)
+  return 'http://localhost:8080';
+};
+
+const API_URL = getApiUrl();
+
+console.log(`API URL: ${API_URL} (${import.meta.env.PROD ? 'Production' : 'Development'})`);
 
 const api = axios.create({
   baseURL: API_URL,
