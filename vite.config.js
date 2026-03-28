@@ -22,11 +22,31 @@ export default defineConfig({
     minify: 'terser',
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['lucide-react', 'react-icons', 'framer-motion'],
-          charts: ['recharts'],
-          utils: ['axios', 'react-hot-toast']
+        // FIX: Convert object to function
+        manualChunks(id) {
+          // Put all node_modules into chunks
+          if (id.includes('node_modules')) {
+            // React and React DOM
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor'
+            }
+            // UI libraries
+            if (id.includes('lucide-react') || id.includes('react-icons') || id.includes('framer-motion')) {
+              return 'ui-vendor'
+            }
+            // Charts
+            if (id.includes('recharts')) {
+              return 'charts-vendor'
+            }
+            // Utils
+            if (id.includes('axios') || id.includes('react-hot-toast') || id.includes('jspdf') || id.includes('xlsx')) {
+              return 'utils-vendor'
+            }
+            // Everything else
+            return 'vendor'
+          }
+          // Don't split app code
+          return null
         }
       }
     }
