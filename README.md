@@ -6,9 +6,7 @@ A modern web application built to help farmers and agricultural businesses effic
 
 ## 🚀 Live Demo
 
-👉 (Add your deployed link here after hosting)
-
----
+👉 https://cropcoresmartfarming.netlify.app
 
 ## 🧰 Tech Stack
 
